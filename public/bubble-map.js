@@ -1,6 +1,28 @@
 // This is a Chiasm component that implements a bubble map.
 // Based on chiasm-leaflet.
 //
+var buffaloIcon = L.Icon.extend({
+    options: {
+      iconSize:     [38, 25],
+    }
+});
+var LeafIcon = L.Icon.extend({
+    options: {
+        shadowUrl: 'img/leaf-shadow.png',
+        iconSize:     [28, 85],
+        shadowSize:   [40, 54],
+        iconAnchor:   [22, 94],
+        shadowAnchor: [4, 62],
+        popupAnchor:  [-3, -76]
+    }
+});
+
+var buffaloIconNew = new buffaloIcon({iconUrl : 'img/buffalo.png'});
+var greenIcon = new LeafIcon({iconUrl: 'img/leaf-green.png'});
+
+L.icon = function (options) {
+    return new L.Icon(options);
+};
 
 function BubbleMap() {
 
@@ -38,6 +60,7 @@ function BubbleMap() {
     rMax: 10,
   });
   var rScale = d3.scale.sqrt();
+
 
 
   // Add a semi-transparent white layer to fade the
@@ -80,7 +103,11 @@ function BubbleMap() {
       locationRandomizer.push(object);
     }
   };
+
+
   my.when(["cleanData", "r"], _.throttle(function (data, r){
+
+
     // TODO make this more efficient.
     // Use D3 data joins?
     oldMarkers.forEach(function (marker){
@@ -96,32 +123,39 @@ function BubbleMap() {
 
       var markerCenter = L.latLng(lat, lng);
       var circleMarker = L.circleMarker(markerCenter, {
-
         // TODO move this to config.
         color: "#FF4136",
-        weight: 1,
+        weight: 10,
         clickable: true,
       });
-
-      //
-      // icon
+      var myMovingMarker = L.Marker.theMovingFromJS([[46.8567, -1.3508],[63.45, 133.523333]],
+        [92000],  {icon: buffaloIconNew}).addTo(my.map);
+      var myMovingMarkerAgain = L.Marker.theMovingFromJS([[49.8567, 2.3508],[55.45, 126.523333]],
+        [95000],  {icon: buffaloIconNew}).addTo(my.map);
+      myMovingMarker.start();
+      myMovingMarkerAgain.start();
+      // //----icon------
       // var circleMarker = L.icon({
-
       //   // TODO move this to config.
       //   iconUrl: 'lion_small-compressor.png',
       //   iconSize: [30,30],
       //   clickable: true,
       // });
-
       // circleMarker.bindPopup("I am a fucking circle");
       // L.marker(markerCenter,{icon:circleMarker}).addTo(my.map);
+
       circleMarker.setRadius(r(d));
-
       circleMarker.addTo(my.map);
-
+      L.marker([51.5, -0.09], {icon: greenIcon}).addTo(my.map).bindPopup("I am a green leaf.");
       return circleMarker;
+
+
+
     });
-  }, 100));
+  }, 1000));
+
 
   return my;
 }
+/*----------  BubbleMap Function Ends!  ----------*/
+
