@@ -34,11 +34,12 @@ function ChiasmLeaflet() {
   // Add the black & white style map layer.
   // Found by browsing http://leaflet-extras.github.io/leaflet-providers/preview/
   // TODO move this to configuration.
-  L.tileLayer("http://stamen-tiles-{s}.a.ssl.fastly.net/toner/{z}/{x}/{y}.png",
+  var Stamen_Watercolor = L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.{ext}',
     {
         noWrap: true,
         continuousWorld : false,
-        reuseTiles : true
+        reuseTiles : true,
+        ext: 'png'
     }).addTo(my.map);
   // Returns the current Leaflet map center
   // in a format that D3 understands: [longitude, latitude]
