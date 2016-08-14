@@ -34,13 +34,43 @@ function ChiasmLeaflet() {
   // Add the black & white style map layer.
   // Found by browsing http://leaflet-extras.github.io/leaflet-providers/preview/
   // TODO move this to configuration.
-  var Stamen_Watercolor = L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.{ext}',
-    {
-        noWrap: true,
-        continuousWorld : false,
-        reuseTiles : true,
-        ext: 'png'
-    }).addTo(my.map);
+  var Stamen_Watercolor = L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.{ext}',{
+    filter: function () {
+      new L.CSSFilter({
+          filters: ['invert(100%)']
+        }).render(this);
+    },
+    noWrap: true,
+    continuousWorld : false,
+    reuseTiles : true,
+    ext: 'png'
+  }).addTo(my.map);
+
+
+  // Stamen_Watercolor.setFilter(function (image, ctx) {
+  //    new L.CanvasFilter({
+  //        channelFilter: function (imageData) {
+  //            return new L.ChannelFilters.Colorize({
+  //                values: [100, 100]
+  //            }).render(imageData);
+  //        }
+  //    }).render(this, image, ctx);
+  // });
+
+
+ // var Stamen_Watercolor = new L.StamenTileLayer('toner');
+
+ // Stamen_Watercolor.setFilter(function (image, ctx) {
+ //     new L.CanvasFilter({
+ //         channelFilter: function (imageData) {
+ //             return new L.ChannelFilters.Colorize({
+ //                 values: [100, 100]
+ //             }).render(imageData);
+ //         }
+ //     }).render(this, image, ctx);
+ // });
+
+
   // Returns the current Leaflet map center
   // in a format that D3 understands: [longitude, latitude]
   function getCenter(){
