@@ -11,8 +11,8 @@ L.Marker.MovingThingSuperClass = L.Marker.extend({
     statics: {
         notStartedState: 0,
         endedState: 1,
-        pausedState: 2,
-        runState: 3
+        pausedState: 1,
+        runState: 1
     },
 
     options: {

@@ -52,8 +52,14 @@ function BarChart() {
   xAxis(my, g);
 
   function onBrush() {
-    my.brushIntervalX = brush.empty() ? Model.None : brush.extent();
+    if(brush.empty()) {
+      my.brushIntervalX = Model.None;
+    } else {
+      my.brushIntervalX = brush.extent();
+    }
   }
+
+  my.onBrush = brush.extent;
 
   my.when("title", titleText.text, titleText);
 
@@ -84,7 +90,7 @@ function BarChart() {
   my.when(["data", "xColumn", "innerBox", "barPadding", "barOuterPadding"],
       function (data, xColumn, innerBox, barPadding, barOuterPadding) {
     var xAccessor = function (d){ return d[xColumn]; };
-    // var interval = d3.time.month;
+
     var interval = d3.time.year;
 
     var xExtent = d3.extent(data, xAccessor);
@@ -96,7 +102,6 @@ function BarChart() {
       .range([0, innerBox.width]);
 
     var numIntervals = interval.range(xScale.domain()[0], xScale.domain()[1]).length;
-
     my.x = function(d) { return xScale(xAccessor(d)); };
 
     // Add 1 so the bars run together.
@@ -195,3 +200,4 @@ function xAxis(my, g){
 
   return axisG;
 }
+

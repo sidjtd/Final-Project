@@ -1,5 +1,6 @@
 // This function defines a Chiasm component that exposes a Crossfilter instance
 // to visualizations via the Chaism configuration.
+
 function ChiasmCrossfilter() {
 
   var my = new ChiasmComponent({
@@ -44,7 +45,6 @@ function ChiasmCrossfilter() {
 
         var cfGroup = cfDimension.group(aggregate);
 
-
         var updateMyGroup = function () {
           // This contains the aggregated values.
           my[groupName] = cfGroup.all();
@@ -56,13 +56,18 @@ function ChiasmCrossfilter() {
         updateFunctions.push(updateMyGroup);
         updateMyGroup();
         return my.when(dimension + "Filter", function (extent) {
-          if(extent !== Model.None){
-            cfDimension.filterRange(extent);
+          if (extent !== Model.None) {
+            // if (dimension === 'date' && play) {
+            //   move(extent);
+            // } else {
+            // t.stop();
+              cfDimension.filterRange(extent);
+            // }
           } else {
             cfDimension.filterAll();
           }
           updateFunctions.forEach(function (updateFunction){
-            if(updateFunction !== updateMyGroup){
+            if (updateFunction !== updateMyGroup){
               updateFunction();
             }
           });
