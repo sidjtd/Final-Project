@@ -1,5 +1,7 @@
 // This is an example Chaism plugin that uses Leaflet.js.
-var my;
+
+// console.log(dataR,"sadcommunism");
+// console.log(ChiasmCrossfilter,"sadcommunismRevisited");
 function ChiasmLeaflet() {
 
   my = ChiasmComponent({
@@ -132,5 +134,36 @@ function ChiasmLeaflet() {
     my.map.invalidateSize();
   });
 
+ var TESTGROUP = L.layerGroup([
+       L.marker([37.8, -91]), L.marker([38.8, -86]), L.marker([47.8, -106]),
+       L.marker([31.8, -90]), L.marker([39.8, -96]), L.marker([33.8, -100]) ]);
+
+ var toggle = L.easyButton({
+   states: [{
+     stateName: 'add-markers',
+     icon: '<span id="heartempty"></span>',
+     title: 'add random markers',
+     onClick: function(control) {
+       my.map.addLayer(TESTGROUP);
+       control.state('remove-markers');
+     }
+   }, {
+     icon: '<span id="heartfully"></span>',
+     stateName: 'remove-markers',
+     onClick: function(control) {
+       my.map.removeLayer(TESTGROUP);
+       control.state('add-markers');
+     },
+     title: 'remove markers'
+   }]
+ });
+ toggle.addTo(my.map);
+
+ L.easyButton( '<span id="resety">></span>', function(){
+   my.map.setView([55, -2], 1);
+ }).addTo(my.map);
+
+
   return my;
 }
+

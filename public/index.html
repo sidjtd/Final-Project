@@ -1,9 +1,12 @@
 <!DOCTYPE html>
 <html>
   <head>
+  <link rel="stylesheet" href="css/style.css"/>
+  <link rel="stylesheet" href="css/easy-button.css"/>
     <meta charset="utf-8">
     <title>Chiasm Crossfilter Integration</title>
     <!-- A functional reactive model library. See github.com/curran/model -->
+    <script type="text/javascript" src="chiasm-crossfilter.js"></script>
 
     <script src="http://curran.github.io/model/cdn/model-v0.2.4.js"></script>
 
@@ -17,7 +20,7 @@
 
     <!-- Load Crossfilter and the Crossfilter Chiasm component. -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/crossfilter/1.3.12/crossfilter.min.js"></script>
-    <script src="chiasm-crossfilter.js"></script>
+
 
     <!-- Chiasm.js depends on Model.js, Lodash.js, D3.js. -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.min.js"></script>
@@ -33,147 +36,121 @@
     <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.css" />
     <script src="http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.js"></script>
     <script type="text/javascript" src="MovingMarker.js"></script>
-    <script src="chiasm-leaflet.js"></script>
+    <script type="text/javascript" src="Control.js"></script>
+    <script type="text/javascript" src="Playback.js"></script>
+    <script type="text/javascript" src="animalsGEO.js"></script>
+
+    <script type="text/javascript" src="chiasm-leaflet.js">
+
+    </script>
     <script src="bubble-map.js"></script>
+    <script src="easy-button.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.0.js"></script>
 
-
-    <!-- Make the Chiasm container fill the page and have a 20px black border. -->
-    <style>
-
-      #chiasm-container {
-        position: fixed;
-        left: 0px;
-        right: 0px;
-        top: 0px;
-        bottom: 0px;
-      }
-
-      /* Style the brush. Draws from http://bl.ocks.org/mbostock/4343214 */
-      .brush .extent {
-        stroke: black;
-        fill-opacity: .2;
-        shape-rendering: crispEdges;
-      }
-
-      /* Axis CSS from bar chart example http://bl.ocks.org/mbostock/3885304 */
-      .axis {
-        font: 10px Helvetica;
-      }
-
-      .axis path,
-      .axis line {
-        fill: none;
-        stroke: lightgray;
-        shape-rendering: crispEdges;
-      }
-
-      /* Custom CSS for axis labels. */
-      .axis-label {
-        text-anchor: middle;
-        font-size: 1.1em;
-      }
-
-    </style>
   </head>
   <body>
 
     <!-- Chiasm component DOM elements will be injected into this div. -->
-    <div id="chiasm-container"></div>
+    <div id="doubleContainer">
+      <div id="test">fun times </div>
+      <br>
+      <div id="chiasm-container">
 
-    <!-- This is the main program that sets up the Chiasm application. -->
-    <script>
+      <!-- This is the main program that sets up the Chiasm application. -->
+      <script>
+        // Create a new Chiasm instance.
+        var chiasm = new Chiasm();
 
-      // Create a new Chiasm instance.
-      var chiasm = new Chiasm();
+        // Register plugins that the configuration can access.
+        chiasm.plugins.layout = ChiasmLayout;
+        chiasm.plugins.links = ChiasmLinks;
+        chiasm.plugins.datasetLoader = ChiasmDatasetLoader;
+        chiasm.plugins.barChart = BarChart;
+        chiasm.plugins.bubbleMap = BubbleMap;
+        chiasm.plugins.crossfilter = ChiasmCrossfilter;
 
-      // Register plugins that the configuration can access.
-      chiasm.plugins.layout = ChiasmLayout;
-      chiasm.plugins.links = ChiasmLinks;
-      chiasm.plugins.datasetLoader = ChiasmDatasetLoader;
-      chiasm.plugins.barChart = BarChart;
-      chiasm.plugins.bubbleMap = BubbleMap;
-      chiasm.plugins.crossfilter = ChiasmCrossfilter;
-
-      // Set the Chaism configuration.
-      chiasm.setConfig({
-        "layout": {
-          "plugin": "layout",
-          "state": {
-            "containerSelector": "#chiasm-container",
-            "layout": {
-              "orientation": "vertical",
-              "children": [
-                "map",
-                "date-chart"
+        // Set the Chaism configuration.
+        chiasm.setConfig({
+          "layout": {
+            "plugin": "layout",
+            "state": {
+              "containerSelector": "#chiasm-container",
+              "layout": {
+                "orientation": "vertical",
+                "children": [
+                  "map",
+                  "date-chart"
+                ]
+              },
+              "sizes": {
+                "date-chart": {
+                  "size": 0.3
+                }
+              }
+            }
+          },
+          "map": {
+            "plugin": "bubbleMap",
+            "state": {
+              "center": [5, 50],
+              "zoom": 4,
+              "rMax": 30
+            }
+          },
+          "date-chart": {
+            "plugin": "barChart",
+            "state": {
+              "fill": "#FF7F78",
+              "yColumn": "value",
+              "xColumn": "key",
+              "margin": { left: 14, top: 1, right: 14, bottom: 20 }
+            }
+          },
+          "data-loader": {
+            "plugin": "datasetLoader",
+            "state": {
+              "path": "animals",
+            }
+          },
+          "crossfilter": {
+            "plugin": "crossfilter",
+            "state": {
+              "groups": {
+                "dates": {
+                  "dimension": "date",
+                  "aggregation": "year"
+                },
+                "locations": {
+                  "dimension": "latlong",
+                },
+                "latitudes": {
+                  "dimension": "latitude",
+                  "aggregation": "floor 500"
+                },
+                "longitudes": {
+                  "dimension": "longitude",
+                  "aggregation": "floor 500"
+                }
+              }
+            }
+          },
+          "links": {
+            "plugin": "links",
+            "state": {
+              "bindings": [
+                "data-loader.dataset -> crossfilter.dataset",
+                "crossfilter.dates -> date-chart.data",
+                "crossfilter.locations-elements -> map.data",
+                "data-loader.dataset -> map.datasetForScaleDomain",
+                "date-chart.brushIntervalX -> crossfilter.dateFilter",
+                "map.longitudeInterval -> crossfilter.longitudeFilter",
+                "map.latitudeInterval -> crossfilter.latitudeFilter"
               ]
-            },
-            "sizes": {
-              "date-chart": {
-                "size": 0.3
-              }
             }
           }
-        },
-        "map": {
-          "plugin": "bubbleMap",
-          "state": {
-            "center": [5, 50],
-            "zoom": 4,
-            "rMax": 30
-          }
-        },
-        "date-chart": {
-          "plugin": "barChart",
-          "state": {
-            "fill": "#FF7F78",
-            "yColumn": "value",
-            "xColumn": "key",
-            "margin": { left: 14, top: 1, right: 14, bottom: 20 }
-          }
-        },
-        "data-loader": {
-          "plugin": "datasetLoader",
-          "state": {
-            "path": "animals"
-          }
-        },
-        "crossfilter": {
-          "plugin": "crossfilter",
-          "state": {
-            "groups": {
-              "dates": {
-                "dimension": "date",
-                "aggregation": "year"
-              },
-              "locations": {
-                "dimension": "latlong",
-              },
-              "latitudes": {
-                "dimension": "latitude",
-                "aggregation": "floor 500"
-              },
-              "longitudes": {
-                "dimension": "longitude",
-                "aggregation": "floor 500"
-              }
-            }
-          }
-        },
-        "links": {
-          "plugin": "links",
-          "state": {
-            "bindings": [
-              "data-loader.dataset -> crossfilter.dataset",
-              "crossfilter.dates -> date-chart.data",
-              "crossfilter.locations-elements -> map.data",
-              "data-loader.dataset -> map.datasetForScaleDomain",
-              "date-chart.brushIntervalX -> crossfilter.dateFilter",
-              "map.longitudeInterval -> crossfilter.longitudeFilter",
-              "map.latitudeInterval -> crossfilter.latitudeFilter"
-            ]
-          }
-        }
-      });
-    </script>
+        });
+      </script>
+      </div>
+    </div>
   </body>
 </html>

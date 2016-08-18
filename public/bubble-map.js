@@ -36,6 +36,7 @@ function BubbleMap() {
   // my.map is the Leaflet instance.
 
   my.when("data", function (data){
+    // console.log(data,"asshole");
     my.cleanData = data.filter(function (d) {
       var lat = d[latitudeColumn];
       var lng = d[longitudeColumn];
@@ -68,7 +69,7 @@ function BubbleMap() {
   var canvasTiles = L.tileLayer.canvas();
   canvasTiles.drawTile = function(canvas, tilePoint, zoom) {
     var ctx = canvas.getContext('2d');
-    ctx.fillStyle = "rgba(255, 255, 250, 0.7)";
+    ctx.fillStyle = "rgba(255, 255, 250, 0.3)";
     ctx.fillRect(0, 0, canvas.width, canvas.height);
   };
   canvasTiles.addTo(my.map);
@@ -105,57 +106,90 @@ function BubbleMap() {
   };
 
   my.when(["cleanData", "r"], _.throttle(function (data, r) {
-
     oldMarkers.forEach(function (marker){
       my.map.removeLayer(marker);
     });
 
-    oldMarkers = data.map(function (d){
-      randomizer(d);
+      oldMarkers = data.map(function (d){
+        randomizer(d);
+        var lat = locationRandomizer[locationRandomizer.indexOf(d)].latitude;
+        var lng = locationRandomizer[locationRandomizer.indexOf(d)].longitude;
 
-      var lat = locationRandomizer[locationRandomizer.indexOf(d)].latitude;
-      var lng = locationRandomizer[locationRandomizer.indexOf(d)].longitude;
+        var markerCenter = L.latLng(lat, lng);
+        var circleMarker = L.circleMarker(markerCenter, {
+          color: "#FF4136",
+          weight: 18,
+          clickable: true,
+          width: '20px',
+          height: '20px'
+        });
+        console.log(circleMarker);
+        // setInterval( () => {
+        //   // console.log("Lol ur mama sux me");
+        //     my.map.removeLayer(circleMarker);
 
-      var markerCenter = L.latLng(lat, lng);
-      var circleMarker = L.circleMarker(markerCenter, {
+        //   circleMarker.latitude = parseFloat(Math.random()+100);
+        //   circleMarker.longitude = parseFloat(Math.random()+100);
+        //   circleMarker.addto(my.map);
+        // }, 500);
 
 
-        color: "#FF4136",
-        weight: 10,
-        clickable: true,
+
+        var myMovingMarker = L.Marker.theMovingFromJS([[46.8567, -1.3508],[63.45, 133.523333]],
+          [92000],  {icon: buffaloIconNew}).addTo(my.map);
+        // console.log(myMovingMarker,"movers");
+        var myMovingMarkerAgain = L.Marker.theMovingFromJS([[49.8567, 2.3508],[55.45, 126.523333]],
+          [95000],  {icon: buffaloIconNew}).addTo(my.map);
+        myMovingMarker.start();
+        myMovingMarkerAgain.start();
+        // //----icon------
+        // var circleMarker = L.icon({
+        //   // TODO move this to config.
+
+
+        // icon
+        // var circleMarker = L.icon({
+
+        //   iconUrl: 'lion_small-compressor.png',
+        //   iconSize: [30,30],
+        //   clickable: true,
+        // });
+        // L.marker(markerCenter,{icon:circleMarker}).addTo(my.map);
+
+        // circleMarker.addEventListener('mouseover', () => {
+        //   console.log('ayylmao');
+        // });
+
+        circleMarker.setRadius(r(d));
+
+        // circleMarker.on('add', function(){
+        //   doAnimations();
+        //   // putting this in setInterval so it runs forever
+        //   setInterval(function(){
+        //     doAnimations();
+        //   }, 1000);
+        // });
+
+        // function doAnimations(){
+        //   circleMarker.on('add', function(){
+        //     var myIcon = document.querySelector('.leaflet-clickable');
+        //     setTimeout(function(){
+        //       myIcon.style.width = '60px',
+        //       myIcon.style.height = '60px'
+        //     }, 1000);
+        //   });
+        // }
+
+
+
+
+
+        circleMarker.addTo(my.map);
+        return circleMarker;
+
+
+
       });
-
-      var myMovingMarker = L.Marker.theMovingFromJS([[46.8567, -1.3508],[63.45, 133.523333]],
-        [92000],  {icon: buffaloIconNew}).addTo(my.map);
-      var myMovingMarkerAgain = L.Marker.theMovingFromJS([[49.8567, 2.3508],[55.45, 126.523333]],
-        [95000],  {icon: buffaloIconNew}).addTo(my.map);
-      myMovingMarker.start();
-      myMovingMarkerAgain.start();
-      // //----icon------
-      // var circleMarker = L.icon({
-      //   // TODO move this to config.
-
-
-      // icon
-      // var circleMarker = L.icon({
-
-      //   iconUrl: 'lion_small-compressor.png',
-      //   iconSize: [30,30],
-      //   clickable: true,
-      // });
-      // L.marker(markerCenter,{icon:circleMarker}).addTo(my.map);
-
-      circleMarker.addEventListener('mouseover', () => {
-        console.log('ayylmao');
-      });
-
-      circleMarker.setRadius(r(d));
-      circleMarker.addTo(my.map);
-      return circleMarker;
-
-
-
-    });
   }, 1000));
 
 

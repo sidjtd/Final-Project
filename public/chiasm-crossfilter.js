@@ -1,5 +1,6 @@
 // This function defines a Chiasm component that exposes a Crossfilter instance
 // to visualizations via the Chaism configuration.
+var dataR;
 
 function ChiasmCrossfilter() {
 
@@ -10,9 +11,10 @@ function ChiasmCrossfilter() {
   var listeners = [];
 
   my.when(["dataset", "groups"], function (dataset, groups){
-    var data = dataset.data;
+    dataR = dataset.data;
+    // console.log(dataR,"happytimegalore");
     if(groups !== Model.None) {
-      var cf = crossfilter(data);
+      var cf = crossfilter(dataR);
       var updateFunctions = [];
 
       listeners.forEach(my.cancel);
@@ -75,5 +77,7 @@ function ChiasmCrossfilter() {
       });
     }
   });
+
+
   return my;
 }

@@ -2,7 +2,13 @@ body {
   background:white;
 }
 
- Map
+.leaflet-clickable {
+  width: 20px;
+  height: 20px;
+
+  /*transition: all 1s;*/
+}
+
 .graticule {
   fill: none;
   stroke: #000;
@@ -18,4 +24,97 @@ body {
 .boundary {
   fill: none;
   stroke: rgb(44,155,155);
+}
+
+#chiasm-container {
+  position: fixed;
+  left: 0px;
+  right: 0px;
+  top: 0px;
+  bottom: 0px;
+  border-style: solid;
+  border-width: 10px;
+  border-color: coral;
+}
+
+.brush .extent {
+  stroke: coral;
+  fill-opacity: .2;
+  shape-rendering: crispEdges;
+}
+
+/* Axis CSS from bar chart example http://bl.ocks.org/mbostock/3885304 */
+.axis {
+  font: 10px Helvetica;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: lightgray;
+  shape-rendering: crispEdges;
+}
+
+/* Custom CSS for axis labels. */
+.axis-label {
+  text-anchor: middle;
+  font-size: 1.1em;
+}
+
+
+.leaflet-bar button,
+.leaflet-bar button:hover {
+  background-color: #fff;
+  border: none;
+  border-bottom: 1px solid #ccc;
+  width: 26px;
+  height: 26px;
+  line-height: 26px;
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  color: black;
+}
+
+.leaflet-bar button {
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  display: block;
+}
+
+.leaflet-bar button:hover {
+  background-color: #f4f4f4;
+}
+
+.leaflet-bar button:first-of-type {
+  border-top-left-radius: 4px;
+  border-top-right-radius: 4px;
+}
+
+.leaflet-bar button:last-of-type {
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+  border-bottom: none;
+}
+
+.leaflet-bar.disabled,
+.leaflet-bar button.disabled {
+  cursor: default;
+  pointer-events: none;
+  opacity: .4;
+}
+
+.easy-button-button .button-state{
+  display: block;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+
+.leaflet-touch .leaflet-bar button {
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
 }
