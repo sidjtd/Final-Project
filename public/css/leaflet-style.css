@@ -467,9 +467,3 @@
     cursor: default;
     opacity: .4;
   }
-  .easy-button-button .button-state{
-    position: relative;
-    display: block;
-    height: 100%;
-    width: 100%;
-  }
