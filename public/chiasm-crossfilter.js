@@ -1,5 +1,6 @@
 // This function defines a Chiasm component that exposes a Crossfilter instance
 // to visualizations via the Chaism configuration.
+//This is my latest, please commit it now
 var dataR;
 
 function ChiasmCrossfilter() {
