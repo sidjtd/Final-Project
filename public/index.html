@@ -1,55 +1,40 @@
 <!DOCTYPE html>
 <html>
   <head>
-<!--   test comment-->
- <link rel="stylesheet" href="css/style.css"/>
-  <link rel="stylesheet" href="css/easy-button.css"/>
+    <link rel="stylesheet" type="text/css" href="css/leaflet-style.css">
+    <link rel="stylesheet" type="text/css" href="css/easy-button.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
     <meta charset="utf-8">
     <title>Chiasm Crossfilter Integration</title>
-    <!-- A functional reactive model library. See github.com/curran/model -->
-    <script type="text/javascript" src="chiasm-crossfilter.js"></script>
-
+      <!-- A functional reactive model library. See github.com/curran/model -->
+    <script src="https://d3js.org/d3-timer.v1.min.js"></script>
     <script src="http://curran.github.io/model/cdn/model-v0.2.4.js"></script>
-
+      <!-- The common base for Chiasm components (depends on Model.js). -->
     <script src="https://d3js.org/d3-timer.v1.min.js"></script>
-    <!-- The common base for Chiasm components (depends on Model.js). -->
     <script src="http://chiasm-project.github.io/chiasm-component/chiasm-component-v0.2.1.js"></script>
-    <script src="https://d3js.org/d3-timer.v1.min.js"></script>
-
-    <!-- This script defines the BarChart component. -->
-    <script src="barChart.js"> </script>
-
-    <!-- Load Crossfilter and the Crossfilter Chiasm component. -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/crossfilter/1.3.12/crossfilter.min.js"></script>
-
-
-    <!-- Chiasm.js depends on Model.js, Lodash.js, D3.js. -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.min.js"></script>
+      <!-- Chiasm.js depends on Model.js, Lodash.js, D3.js. -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js"></script>
-
-    <!-- Chiasm.js and plugins. See github.com/chiasm-project -->
-    <script src="http://chiasm-project.github.io/chiasm/chiasm-v0.2.0.js"></script>
-    <script src="http://chiasm-project.github.io/chiasm-layout/chiasm-layout-v0.2.2.js"></script>
-    <script src="http://chiasm-project.github.io/chiasm-links/chiasm-links-v0.2.1.js"></script>
-    <script src="http://chiasm-project.github.io/chiasm-dataset-loader/chiasm-dataset-loader-v0.3.1.js"></script>
-
-    <!-- The map component. -->
-    <link rel="stylesheet" href="./css/leaflet-style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/3.10.1/lodash.min.js"></script>
+      <!-- Load Crossfilter and the Crossfilter Chiasm component. -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crossfilter/1.3.12/crossfilter.min.js"></script>
+      <!-- Chiasm.js and plugins. See github.com/chiasm-project -->
+    <script type="text/javascript" src="http://chiasm-project.github.io/chiasm-dataset-loader/chiasm-dataset-loader-v0.3.1.js"></script>
+    <script type="text/javascript" src="http://chiasm-project.github.io/chiasm-layout/chiasm-layout-v0.2.2.js"></script>
+    <script type="text/javascript" src="http://chiasm-project.github.io/chiasm-links/chiasm-links-v0.2.1.js"></script>
+    <script type="text/javascript" src="http://chiasm-project.github.io/chiasm/chiasm-v0.2.0.js"></script>
+      <!-- The map component. -->
     <script src="http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.js"></script>
-
-    <script type="text/javascript" src="MovingMarker.js"></script>
-    <script type="text/javascript" src="Control.js"></script>
-    <script type="text/javascript" src="Playback.js"></script>
-    <script type="text/javascript" src="animalsGEO.js"></script>
-
-
-    <script src="chiasm-leaflet.js"></script>
-    <script src="bubble-map.js"></script>
-    <link rel="stylesheet" type="text/css" href="./css/style.css">
-
-    <!-- Make the Chiasm container fill the page and have a 20px black border. -->
+    <script type="text/javascript" src="chiasm-crossfilter.js"></script>
+    <script type="text/javascript" src="chiasm-leaflet.js"></script>
+    <script type="text/javascript" src="bubble-map.js"></script>
+      <!-- This script defines the BarChart component. -->
+    <script src="barChart.js"> </script>
+      <!-- THIS IS SIDS LINKS DONT DELETE WITHOUT ASKING HIM PLS -->
+    <script type="text/javascript" src="easy-button.js"></script>
+    <script type="text/javascript" src="js/animalsGEO.js"></script>
+    <script type="text/javascript" src="js/MovingMarker.js"></script>
+      <!-- Make the Chiasm container fill the page and have a 20px black border. -->
     <style>
-
       #chiasm-container {
         position: absolute;
         left: 0px;
@@ -58,12 +43,6 @@
         bottom: 0px;
       }
     </style>
-
-    </script>
-    <script src="bubble-map.js"></script>
-    <script src="easy-button.js"></script>
-    <script src="http://code.jquery.com/jquery-1.11.0.js"></script>
-
   </head>
   <body>
     <div id ='main-container'>
@@ -71,22 +50,16 @@
         <h1>Header</h1>
       </div>
     <!-- Chiasm component DOM elements will be injected into this div. -->
-
       <div id="chiasm-container"></div>
-
       <!-- This is the main program that sets up the Chiasm application. -->
       <script>
-
-        // Create a new Chiasm instance.
         var chiasm = new Chiasm();
-
-        // Register plugins that the configuration can access.
         chiasm.plugins.layout = ChiasmLayout;
-        chiasm.plugins.links = ChiasmLinks;
-        chiasm.plugins.datasetLoader = ChiasmDatasetLoader;
-        chiasm.plugins.barChart = BarChart;
         chiasm.plugins.bubbleMap = BubbleMap;
+        chiasm.plugins.barChart = BarChart;
+        chiasm.plugins.links = ChiasmLinks;
         chiasm.plugins.crossfilter = ChiasmCrossfilter;
+        chiasm.plugins.datasetLoader = ChiasmDatasetLoader;
 
         // Set the Chaism configuration.
         chiasm.setConfig({

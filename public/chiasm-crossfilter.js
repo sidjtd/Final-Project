@@ -1,30 +1,22 @@
 // This function defines a Chiasm component that exposes a Crossfilter instance
-// to visualizations via the Chaism configuration.
-//This is my latest, please commit it now
+// to visualizations via the Chaism configuration. This is my latest, please commit it now
 var dataR;
-
 function ChiasmCrossfilter() {
-
   var my = new ChiasmComponent({
     groups: Model.None
   });
-
   var listeners = [];
-
   my.when(["dataset", "groups"], function (dataset, groups){
     dataR = dataset.data;
     // console.log(dataR,"happytimegalore");
     if(groups !== Model.None) {
       var cf = crossfilter(dataR);
       var updateFunctions = [];
-
       listeners.forEach(my.cancel);
-
       listeners = Object.keys(groups).map(function (groupName){
         var group = groups[groupName];
         var dimension = group.dimension;
         var cfDimension = cf.dimension(function (d){ return d[dimension]; }); //invalid date error here
-
         // Generate an aggregate function by parsing the "aggregation" config option.
         var aggregate;
         if(group.aggregation){
@@ -45,15 +37,11 @@ function ChiasmCrossfilter() {
         } else {
           aggregate = function (d){ return d; };
         }
-
         var cfGroup = cfDimension.group(aggregate);
-
         var updateMyGroup = function () {
           // This contains the aggregated values.
           my[groupName] = cfGroup.all();
-
-          // This contains the non-aggregated values
-          // with filters from other dimensions applied.
+          // This contains the non-aggregated values with filters from other dimensions applied.
           my[groupName + "-elements"] = cfDimension.top(Infinity);
         };
         updateFunctions.push(updateMyGroup);
@@ -78,7 +66,5 @@ function ChiasmCrossfilter() {
       });
     }
   });
-
-
   return my;
 }

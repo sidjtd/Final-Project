@@ -15,14 +15,12 @@ db.once('open', _ => console.log("Mongo reporting for duty!"));
 app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
-
 app.get( '/test', ( req, res ) => {
     Animal.find( ( err, animals ) => {
       if (err) res.send(err);
       return res.json(animals);
     });
   });
-
 app.post( '/test', ( req, res ) => {
     var animal = new Animal();
     animal.commonName = req.body.commonName;
@@ -31,6 +29,4 @@ app.post( '/test', ( req, res ) => {
       return res.send(animal);
     });
   });
-
 app.listen(PORT, _ => console.log(`Now listening on PORT ${PORT}`));
-//http://api.gbif.org/v1/species/search?isExtinct=true
