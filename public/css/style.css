@@ -36,11 +36,11 @@
   margin-left: 10%;
   margin-right: 10%;
   margin-top: 10%;
-  max-height: 65%;
-  min-height: 65%;
+  max-height: 40%;
+  min-height: 40%;
 }
 #additional-info{
-  padding-top: 750px;
+  padding-top: 40%;
 }
 .chiasm-component-date-chart{
   position: static;
@@ -49,6 +49,7 @@
   position: absolute;
   width: 100%;
 }
+
 .tinyBuff{
   height: 30px;
   background-image: url(./../img/buffalo.png);
@@ -73,4 +74,9 @@
   0% {-webkit-transform: scale(0.5, 0.5); opacity: 0.0;}
   50% {opacity: 1.0;}
   100% {-webkit-transform: scale(1.2, 1.2); opacity: 0.0;}
+}
+
+#left-additional-info{
+  max-width: 50%;
+
 }

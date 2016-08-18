@@ -18,6 +18,7 @@ function ChiasmLeaflet() {
     center: [36.21, 138.25],
   }).setView(my.center, my.zoom);
   // Found by browsing http://leaflet-extras.github.io/leaflet-providers/preview/
+
   // TODO move this to configuration.
   var Stamen_Watercolor = L.tileLayer('http://stamen-tiles-{s}.a.ssl.fastly.net/watercolor/{z}/{x}/{y}.{ext}',{
     noWrap: true,

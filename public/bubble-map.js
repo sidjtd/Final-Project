@@ -151,6 +151,7 @@ function BubbleMap() {
         return circleMarker;
       });
   }, 1000));
+
   return my;
 }
 /*----------  BubbleMap Function Ends!  ----------*/
