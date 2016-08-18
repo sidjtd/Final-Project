@@ -34,14 +34,30 @@
     <script src="http://chiasm-project.github.io/chiasm-dataset-loader/chiasm-dataset-loader-v0.3.1.js"></script>
 
     <!-- The map component. -->
-    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.css" />
+    <link rel="stylesheet" href="./css/leaflet-style.css" />
     <script src="http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.js"></script>
+
     <script type="text/javascript" src="MovingMarker.js"></script>
     <script type="text/javascript" src="Control.js"></script>
     <script type="text/javascript" src="Playback.js"></script>
     <script type="text/javascript" src="animalsGEO.js"></script>
 
-    <script type="text/javascript" src="chiasm-leaflet.js">
+
+    <script src="chiasm-leaflet.js"></script>
+    <script src="bubble-map.js"></script>
+    <link rel="stylesheet" type="text/css" href="./css/style.css">
+
+    <!-- Make the Chiasm container fill the page and have a 20px black border. -->
+    <style>
+
+      #chiasm-container {
+        position: absolute;
+        left: 0px;
+        right: 0px;
+        top: 0px;
+        bottom: 0px;
+      }
+    </style>
 
     </script>
     <script src="bubble-map.js"></script>
@@ -50,15 +66,17 @@
 
   </head>
   <body>
-
+    <div id ='main-container'>
+      <div id='header-div'>
+        <h1>Header</h1>
+      </div>
     <!-- Chiasm component DOM elements will be injected into this div. -->
-    <div id="doubleContainer">
-      <div id="test">fun times </div>
-      <br>
-      <div id="chiasm-container">
+
+      <div id="chiasm-container"></div>
 
       <!-- This is the main program that sets up the Chiasm application. -->
       <script>
+
         // Create a new Chiasm instance.
         var chiasm = new Chiasm();
 
@@ -110,7 +128,7 @@
           "data-loader": {
             "plugin": "datasetLoader",
             "state": {
-              "path": "animals",
+              "path": "animals"
             }
           },
           "crossfilter": {
@@ -151,6 +169,8 @@
           }
         });
       </script>
+      <div id='additional-info'>
+        <h2>ADDITIONAL INFO</h2>
       </div>
     </div>
   </body>
