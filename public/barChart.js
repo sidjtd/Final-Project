@@ -14,7 +14,7 @@ function BarChart() {
     // d3.scale.ordinal.rangeRoundBands(interval[, padding[, outerPadding]]) https://github.com/mbostock/d3/wiki/Ordinal-Scales#ordinal_rangeRoundBands
     barPadding: 0.1,
     barOuterPadding: 0.1,
-    fill: "#a3a3a3",
+    fill: "#A3A3A3",
     stroke: "none",
     strokeWidth: "1px",
     brushEnabled: false,

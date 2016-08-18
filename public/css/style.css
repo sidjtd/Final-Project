@@ -49,3 +49,28 @@
   position: absolute;
   width: 100%;
 }
+.tinyBuff{
+  height: 30px;
+  background-image: url(./../img/buffalo.png);
+  border-style: solid;
+  border-width: 1px;
+  border-color: green;
+  -webkit-animation: pulsate 1s ease-out;
+  -webkit-animation-iteration-count: infinite;
+}
+
+.leaf-icon{
+  height: 30px;
+  background-image: url(./../img/buffalo.png);
+  border-style: solid;
+  border-width: 1px;
+  border-color: green;
+/*  -webkit-animation: pulsate 1s ease-out;
+  -webkit-animation-iteration-count: infinite;*/
+}
+
+@-webkit-keyframes pulsate {
+  0% {-webkit-transform: scale(0.5, 0.5); opacity: 0.0;}
+  50% {opacity: 1.0;}
+  100% {-webkit-transform: scale(1.2, 1.2); opacity: 0.0;}
+}

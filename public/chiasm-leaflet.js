@@ -12,7 +12,7 @@ function ChiasmLeaflet() {
     zoom: 2,
     minZoom: 2,
     maxZoom: 5,
-    // scrollWheelZoom: false,
+    scrollWheelZoom: false,
     zoomControl: true,
     attributionControl: false,
     center: [36.21, 138.25],

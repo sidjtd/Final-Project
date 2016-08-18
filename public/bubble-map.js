@@ -1,21 +1,34 @@
-// This is a Chiasm component that implements a bubble map.Based on chiasm-leaflet.
-var buffaloIcon = L.Icon.extend({
-    options: {
-      iconSize:     [38, 25],
-    }
+
+var iAmABuffaloDivIconExtended = L.DivIcon.extend({
+  options: {
+    iconSize:     [38, 25],
+    html: '<div class="tinyBuff"></div>',
+    className: 'bufficon',
+  }
 });
+// var buffaloIcon = L.Icon.extend({
+//   options: {
+//     iconSize:     [38, 25],
+//     html: '<div id="leaflet-marker-icon></div>',
+//     className: 'bufficon',
+//   }
+// });
 var LeafIcon = L.Icon.extend({
-    options: {
-        shadowUrl: 'img/leaf-shadow.png',
-        iconSize:     [28, 85],
-        shadowSize:   [40, 54],
-        iconAnchor:   [22, 94],
-        shadowAnchor: [4, 62],
-        popupAnchor:  [-3, -76]
-    }
+  options: {
+    shadowUrl: 'img/leaf-shadow.png',
+    iconSize:     [28, 85],
+    shadowSize:   [40, 54],
+    iconAnchor:   [22, 94],
+    shadowAnchor: [4, 62],
+    popupAnchor:  [-3, -76],
+    className: 'leaf-icon',
+    html: '<div class="flower"></div>'
+  }
 });
-var buffaloIconNew = new buffaloIcon({iconUrl : 'img/buffalo.png'});
+var buffaloIconNewer = new iAmABuffaloDivIconExtended({iconUrl : 'img/buffalo.png'});
+// var buffaloIconNew = new buffaloIcon({iconUrl : 'img/buffalo.png'});
 var greenIcon = new LeafIcon({iconUrl: 'img/leaf-green.png'});
+
 L.icon = function (options) {
     return new L.Icon(options);
 };
@@ -32,7 +45,7 @@ function BubbleMap() {
       var lat = d[latitudeColumn];
       var lng = d[longitudeColumn];
       if(isNaN(+lat) || isNaN(+lng)){
-        console.log(`lat:${lat} + lng:${lng} Invalid.`);
+        // console.log(`lat:${lat} + lng:${lng} Invalid.`);
         return false;
       }
       return true;
@@ -95,7 +108,6 @@ function BubbleMap() {
           width: '20px',
           height: '20px'
         });
-        console.log(circleMarker);
         // setInterval( () => {
         //   // console.log("Lol ur mama sux me");
         //     my.map.removeLayer(circleMarker);
@@ -104,16 +116,20 @@ function BubbleMap() {
         //   circleMarker.longitude = parseFloat(Math.random()+100);
         //   circleMarker.addto(my.map);
         // }, 500);
+
+        L.marker([51.5, -0.09], {icon: greenIcon}).addTo(my.map).bindPopup("I am a green leaf.");
+        L.marker([46.8567, -1.3508], {icon: buffaloIconNewer}).addTo(my.map);
+
         var myMovingMarker = L.Marker.theMovingFromJS([[46.8567, -1.3508],[63.45, 133.523333]],
-          [92000],  {icon: buffaloIconNew}).addTo(my.map);
-        // console.log(myMovingMarker,"movers");
+          [92000],  {icon: buffaloIconNewer}).addTo(my.map);
         var myMovingMarkerAgain = L.Marker.theMovingFromJS([[49.8567, 2.3508],[55.45, 126.523333]],
-          [95000],  {icon: buffaloIconNew}).addTo(my.map);
+          [95000],  {icon: buffaloIconNewer}).addTo(my.map);
         myMovingMarker.start();
         myMovingMarkerAgain.start();
 
-        circleMarker.setRadius(r(d));
 
+
+        circleMarker.setRadius(r(d));
         // circleMarker.on('add', function(){
         //   doAnimations();
         //   // putting this in setInterval so it runs forever
