@@ -349,6 +349,7 @@
   text-align: center;
   }
 .leaflet-popup-content-wrapper {
+  width:auto !important;
   border-radius: 12px;
   text-align: left;
   padding: 1px;

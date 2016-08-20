@@ -32,6 +32,10 @@
   stroke: lightgray;
   shape-rendering: crispEdges;
 }
+
+.leaflet-container {
+  height: 800px.;
+}
 #chiasm-container{
   margin-left: 10%;
   margin-right: 10%;
@@ -50,19 +54,108 @@
   width: 100%;
 }
 
-.tinyBuff{
-  height: 30px;
+div.tinyBuffy{
   background-image: url(./../img/buffalo.png);
-  border-style: solid;
-  border-width: 1px;
-  border-color: green;
-  -webkit-animation: pulsate 1s ease-out;
+  background-size: cover;
+  height: 30px;
+  -webkit-animation: moving 1s ease-in;
+  -webkit-animation-duration: 3s;
   -webkit-animation-iteration-count: infinite;
+  -webkit-transform: rotate(4deg);
+  /*animation-delay: 1s;*/
 }
+
+
+@-webkit-keyframes moving {
+  0% { -moz-transform: scaleX(1);
+        -o-transform: scaleX(1);
+        -webkit-transform: scaleX(1);
+        transform: scaleX(1);
+      }
+  /*1% {-webkit-transform: scale(1.0, 1.0); opacity: 1.0;}*/
+  /*50% {-webkit-transform: scale(0.9, 0.9); opacity: 1.0;}*/
+  50% { -moz-transform: scaleX(1);
+        -o-transform: scaleX(1);
+        -webkit-transform: scaleX(1);
+        transform: scaleX(1);
+      }
+  51% { -moz-transform: scaleX(-1);
+        -o-transform: scaleX(-1);
+        -webkit-transform: scaleX(-1);
+        transform: scaleX(-1);
+      }
+  /*50% {-webkit-transform: translate(7px,0)};*/
+  99% { -moz-transform: scaleX(-1);
+        -o-transform: scaleX(-1);
+        -webkit-transform: scaleX(-1);
+        transform: scaleX(-1);
+      }
+  100% { -moz-transform: scaleX(1);
+        -o-transform: scaleX(1);
+        -webkit-transform: scaleX(1);
+        transform: scaleX(1);
+      }
+}
+/*
+div.tinyBuffy:nth-child(odd) {
+  -moz-transform: rotate(4deg);
+  -ms-transform: rotate(4deg);
+  -o-transform: rotate(4deg);
+  transform: rotate(4deg);
+  -webkit-filter: grayscale(100%);
+  -moz-filter: grayscale(100%);
+  -ms-filter: grayscale(100%);
+  -o-filter: grayscale(100%);
+  filter: grayscale(100%);
+}*/
+
+div.tinyBuff:nth-child(3n+2) {
+  -webkit-animation: pulsate 1s ease-in;
+  -webkit-animation-duration: 3s;
+  animation-delay: 5s;
+  -webkit-animation-delay: 5s;
+  -webkit-filter: grayscale(100%);
+  -moz-filter: grayscale(100%);
+  -ms-filter: grayscale(100%);
+  -o-filter: grayscale(100%);
+  filter: grayscale(100%);
+  -moz-transform: scaleY(-1);
+  -o-transform: scaleY(-1);
+  -webkit-transform: scaleY(-1);
+  transform: scaleX(-1); rotate(-2.5deg);
+  -webkit-animation-iteration-count: infinite;
+ }
+div.tinyBuff:nth-child(5n+3) {
+  -webkit-animation: pulsate 1s ease-in;
+  -webkit-animation-duration: 3s;
+  -webkit-animation-iteration-count: infinite;
+  animation-delay: 1s;
+  -webkit-animation-delay: 1s;
+  transform: scale(9);
+}
+
+div.tinyBuff:nth-child(7n+4) {
+ -webkit-animation: pulsate 1s ease-in;
+ -webkit-animation-duration: 3s;
+ -webkit-animation-iteration-count: infinite;
+ transform: scale(20);
+ -webkit-filter: grayscale(100%);
+ -moz-filter: grayscale(100%);
+ -ms-filter: grayscale(100%);
+ -o-filter: grayscale(100%);
+ filter: grayscale(100%);
+}
+
+/*@-webkit-keyframes disco {
+    <? for ($i=0;$i<=100;$i++)
+    {echo create_animation_frame($i);
+    $i++; // Add another value to $i. Remove line = 100 frames.
+    }?>
+}*/
 
 .leaf-icon{
   height: 30px;
-  background-image: url(./../img/buffalo.png);
+  background-image: url(./../img/leaf-green.png);
   border-style: solid;
   border-width: 1px;
   border-color: green;
@@ -70,11 +163,6 @@
   -webkit-animation-iteration-count: infinite;*/
 }
 
-@-webkit-keyframes pulsate {
-  0% {-webkit-transform: scale(0.5, 0.5); opacity: 0.0;}
-  50% {opacity: 1.0;}
-  100% {-webkit-transform: scale(1.2, 1.2); opacity: 0.0;}
-}
 
 #left-additional-info{
   max-width: 50%;
