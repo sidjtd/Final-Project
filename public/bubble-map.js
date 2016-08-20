@@ -3,7 +3,7 @@ var popup = new L.Popup({
   autoPan: true,
   closeButton: false,
   autoPanPadding: [10,10]
-})
+});
 /*=============================================
 =            Icon Classes and more            =
 =============================================*/
@@ -195,7 +195,7 @@ function BubbleMap() {
         // console.log(genericAnimal);
         genericAnimal.on('dragend', function(el){
           genericAnimal.openPopup();
-        })
+        });
 
 
 

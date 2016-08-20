@@ -175,8 +175,9 @@ function ChiasmLeaflet() {
 
   /*----------  Leys play with Layers and Overlays  ----------*/
   var animalLayer = L.layerGroup().addTo(my.map);
-  var overlays = {"Animals": animalLayer};
-  L.control.layers(null,overlays).addTo(my.map);
+
+  var overlay = {'Animals': animalLayer};
+  L.control.layers(null, overlay).addTo(my.map);
 
   // var southWest = L.latLng(40.712, -74.227);
   //     northEast = L.latLng(40.774, -74.125);
