@@ -117,9 +117,11 @@ function BubbleMap() {
       // This line added to demonstrate working example my.r = function (){ return rDefault; };
     }
   });
+  var firstRunOnly = true;
   var oldMarkers = [];
   var allDataHoldingArr = [];
   var typeStore = [];
+  var genericAnimalStore = [];
   var randomizer = function(obj){
     if(!allDataHoldingArr.includes(obj)){
       obj.latitude = obj.latitude + Math.random(0,500);
@@ -132,7 +134,7 @@ function BubbleMap() {
     oldMarkers.forEach(function (mark_param){
       my.map.removeLayer(mark_param);
     });
-                      console.log("Dude I happen twice for some reason!");
+                      console.log("Whys this twice...!");
 
     oldMarkers = data.map(function (param_b4_oldMarks){
 
@@ -172,15 +174,6 @@ function BubbleMap() {
         // }, 500);
 
 
-      var genericAnimalStore = [];
-      var greenPlant = L.marker([51.5, -0.09], {
-        icon: greenIcon})
-        .addTo(my.map)
-        .bindPopup("I am a green leaf.");
-
-        function bindNewPopup(){
-            this.bindPopup(randomText());
-        }
       // for(var i = 0; i < aniType.length; i++){
         var genericAnimal = L.marker(markerCenter, {
           icon: buffaloIconNewer,
@@ -189,13 +182,47 @@ function BubbleMap() {
           type : aniType
           })
           // .on('click', bindNewPopup)
-          .bindPopup(`${aniCommonName} says: \"${randomText()}!\"`)
-          .addTo(my.map);
-        // console.log(genericAnimal.options.name);
-        // console.log(genericAnimal);
+          .bindPopup(`${aniCommonName} says: \"${randomText()}!\"`);
+
+          genericAnimalStore.push(genericAnimal);
+
+          // console.log("animalstore",genericAnimalStore);
+          // console.log("oldM",oldMarkers);
+          // console.log("alldata",allDataHoldingArr);
+          // console.log("anitypestore",typeStore);
+        for(var i = 0; i < genericAnimalStore.length; i++){
+
+          if(genericAnimalStore[i].options.type === "air"){
+            genericAnimalStore[i].options.icon.options.html ='<div class="tinyBirdy"></div>';
+            genericAnimalStore[i].options.icon.options.className = 'tinyBird';
+            genericAnimalStore[i].options.icon.options.id = 'bird'+[i];
+          }
+          else if (genericAnimalStore[i].options.type === "land"){
+            genericAnimalStore[i].options.icon.options.html ='<div class="tinyBuffyA"></div>';
+            genericAnimalStore[i].options.icon.options.className = 'tinyBuffA';
+            genericAnimalStore[i].options.icon.options.id = 'buff'+[i];
+          }else{
+            genericAnimalStore[i].options.icon.options.html ='<div class="tinyFishy"></div>';
+            genericAnimalStore[i].options.icon.options.className = 'tinyFish';
+            genericAnimalStore[i].options.icon.options.id = 'fish'+[i];
+            console.log("testing a lot for this good ol staruday");
+          }
+        }
         genericAnimal.on('dragend', function(el){
           genericAnimal.openPopup();
         });
+        // console.log("11111",genericAnimalStore[1].options.type);
+        // console.log("222222",genericAnimalStore[1]);
+        for(var i = 0; i < genericAnimalStore.length; i++){
+          if(firstRunOnly){
+          genericAnimalStore[i].addTo(my.map);
+          }
+          firstRunOnly = false;
+        }
+
+
+        // console.log("Yay baybee!",[genericAnimal][0].options);
+        // console.log("Yay baybee!",[genericAnimal][0].options.icon.options.html);
 
 
 
@@ -233,7 +260,10 @@ function BubbleMap() {
 
 
       function onMarkerClick(click_el) {
-          console.log("You clicked the marker " + click_el.target.options.type+' '+click_el.target.options.name);
+
+        console.log(click_el.target.options);
+
+          console.log("You clicked " + click_el.target.options.icon.options.id+' '+click_el.target.options.name);
       }genericAnimal.on('click', onMarkerClick);
 
       return genericAnimal;

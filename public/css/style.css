@@ -53,38 +53,54 @@
   position: absolute;
   width: 100%;
 }
-div.tinyBird{
-  box-shadow: 0 8px 3px -1px rgba(0, 0, 0, 0.1);
-  background-image: url(./../img/bird.png);
-}
 
-div.tinyBuffy{
+div.tinyFishy{
   box-shadow: 0 8px 3px -1px rgba(0, 0, 0, 0.1);
-  background-image: url(./../img/buffalo.png);
+  background-image: url(./../img/ps1.png);
   background-size: cover;
   height: 25px;
 }
 
+div.tinyBirdy{
+  box-shadow: 0 8px 3px -1px rgba(0, 0, 0, 0.1);
+  background-image: url(./../img/bird.png);
+  background-size: cover;
+  height: 25px;
+}
 
-/*div.tinyBuffy:nth-child(3n+1) {
-  filter: sepia(100%);
-  -o-filter: sepia(100%);
-  -ms-filter: sepia(100%);
-  -moz-filter: sepia(100%);
-  -webkit-filter: sepia(100%);
-  -webkit-animation-duration: 3s;
+div.tinyBuffyA{
+  box-shadow: 0 8px 3px -1px rgba(0, 0, 0, 0.1);
+  background-image: url(./../img/buffalo.png);
+  background-size: cover;
+  height: 25px;
+
   -webkit-animation-timing-function: linear;
   -webkit-animation: "movingRight" 1s ease-in;
   -webkit-animation-iteration-count: infinite;
+}
+
+
+
+
+div.tinyBuffyA:nth-child(2n+1) {
+  filter: invert(100%);
+  -o-filter: invert(100%);
+  -ms-filter: invert(100%);
+  -moz-filter: invert(100%);
+  -webkit-filter: invert(100%);
+  -webkit-animation-duration: 3s;
+  -webkit-animation-timing-function: linear;
+  -webkit-animation: "movingLeft" 1s ease-in;
+  -webkit-animation-iteration-count: infinite;
  }
 
- div.tinyBuffy:nth-child(5n+1) {
+ div.tinyBuffyA:nth-child(3) {
    -webkit-animation-duration: 3s;
    -webkit-animation-timing-function: linear;
    -webkit-animation: "movingRight" 1s ease-in;
    -webkit-animation-iteration-count: infinite;
   }
-  */
+
 @-webkit-keyframes movingRight {
   0% {
     transform: scaleX(1);
